@@ -1,0 +1,34 @@
+<!doctype>
+<html>
+	<head>
+		<title>Simple Quiz</title>
+		<link rel="stylesheet" type="text/css" href="SimpleQuiz.css"></link>		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+		<script type="text/javascript" src="SimpleQuiz.js"></script>
+
+	</head>
+	<body>
+		
+		<div id="container">
+		<div id="quizzes">			
+			<label>Cuestionario: </label>
+			<select onchange="loadQuiz(this.value)">
+				<option value="-1">-- Seleccione --</option>
+				<option value="quiz_1">Cuestionario 1</option>
+				<option value="quiz_2">Cuestionario 2</option>
+			</select>
+			<input id="btnValidator" type="button" value="Revisar" onclick="validateQuiz()">
+			<input id="btnReset" type="button" value="Reiniciar" onclick="resetQuiz()">
+		</div>
+		<br>
+		
+		<div id="menu">
+			<div id="status">		
+				<label>Aciertos: </label><input id="txtAciertos" type="text" value="0">
+			</div>
+		</div>
+		<div id="quizContainer">
+		</div>					
+		</div>
+	</body>
+</html>

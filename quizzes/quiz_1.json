@@ -1,0 +1,28 @@
+quizzes["quiz_1"] = [
+    {
+        "question": "var x=\"5\", y=\"10\";\nconsole.log(x+y);",
+        "options": [
+            "510",
+            "15",
+            "105",
+            "50"
+        ],
+        "correctAnswers": [
+            0
+        ],
+        "mode": "strict"
+    },
+    {
+        "question": "Capital de Peru:",
+        "options": [
+            "Guatemala",
+            "Lima",
+            "Montevideo",
+            "Ninguna de las anteriores"
+        ],
+        "correctAnswers": [
+            1
+        ],
+        "mode": "strict"
+    }
+]

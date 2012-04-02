@@ -1,0 +1,16 @@
+quizzes["quiz_2"] = [
+    {
+        "question": "Los anfibios pueden vivir en:",
+        "options": [
+            "Tierra",
+            "Aire",
+            "Agua",
+            "Espacio"
+        ],
+        "correctAnswers": [
+            0,
+            2
+        ],
+        "mode": "permisive"
+    }
+]
