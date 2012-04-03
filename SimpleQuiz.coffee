@@ -11,8 +11,12 @@ generateQuiz = (quizName, quiz) ->
 
 	$(quiz).each((key, quizElement) ->
 
-		quizHTML += '<div id="quizElement'+key+'"><div class="question">'+quizElement.question+'</div>'+
-					'<ol id="'+"question"+key+quizName+'" data-question-checked="false">'
+		quizHTML += '<div id="quizElement'+key+'"><div class="question">'+quizElement.question+'</div>'
+
+		if(quizElement.correctAnswers.length > 1)
+			quizHTML += '<ol id="'+"question"+key+quizName+'" data-question-checked="false" data-multiple-answers="true">'
+		else
+			quizHTML += '<ol id="'+"question"+key+quizName+'" data-question-checked="false" data-multiple-answers="false">'
 
 		$(quizElement.options).each((key, optionText) ->
 
@@ -27,9 +31,13 @@ generateQuiz = (quizName, quiz) ->
 	elements = $('#quizContainer').find(" ol li")
 
 	elements.mousedown((event) ->
-
-		if(!$(this).parent().data("questionChecked"))
-			$(this).toggleClass("selected")
+		
+		if($(this).parent().data("questionChecked") == false)
+			if($(this).parent().data("multipleAnswers") == true)
+				$(this).toggleClass("selected")	
+			else
+				$(this).siblings().attr("class","");
+				$(this).attr("class","selected");		
 	)
 
 	elements.hover(
@@ -40,6 +48,7 @@ generateQuiz = (quizName, quiz) ->
 validate = ->
 
 	correctOptions = 0
+	incorrectOptions = 0
 
 	currentQuizElement = currentQuiz[currentCuestion]
 	correctAnswers = currentQuizElement.correctAnswers
@@ -59,19 +68,20 @@ validate = ->
 			if(correctAnswers.indexOf(index) > -1)
 				correctOptions += 1
 				$(this).attr("class","good")
-			else		
+			else
+				incorrectOptions += 1
 				$(this).attr("class","bad")	
 	)
 
-	if(correctOptions != correctAnswers.length)
+	
 
-		if( evaluationMode == "permisive" and elements.filter(".bad").length == 0)
-			elements.filter(".good").attr("class","almostGood")
-			rightAnswers += Math.round(correctOptions*10/correctAnswers.length)/10
-		
-
+	if(correctOptions == correctAnswers.length and incorrectOptions == 0)
+		rightAnswers += 1
 	else
-		rightAnswers += 1		
+		if( evaluationMode == "permisive")
+			elements.filter(".good").attr("class","almostGood")
+			rightAnswers += Math.round((correctOptions - incorrectOptions)*10/correctAnswers.length)/10
+				
 	
 	document.getElementById("txtAciertos").value = rightAnswers
 
@@ -89,6 +99,7 @@ validateQuiz = ->
 
 resetQuiz = ->
 	resetScore()
+	$('#quizContainer').find(" ol").data("questionChecked",false)
 	$('#quizContainer').find(" ol li").attr("class","")
 	
 resetScore = ->
